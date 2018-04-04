@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             notificationFragment = new NotificationFragment();
             accountFragment = new AccountFragment();
 
-            replaceFragment(homeFragment);
+            initializeFragment();
 
             mainbottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -197,9 +197,35 @@ public class MainActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment) {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_container, fragment);
+        if (fragment == homeFragment) {
+            fragmentTransaction.hide(notificationFragment);
+            fragmentTransaction.hide(accountFragment);
+        } else if (fragment == notificationFragment) {
+            fragmentTransaction.hide(homeFragment);
+            fragmentTransaction.hide(accountFragment);
+        } else if (fragment == accountFragment) {
+            fragmentTransaction.hide(notificationFragment);
+            fragmentTransaction.hide(homeFragment);
+        }
+
+        fragmentTransaction.show(fragment);
+//        fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.commit();
 
+    }
+
+    private void initializeFragment() {
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        fragmentTransaction.add(R.id.main_container, homeFragment);
+        fragmentTransaction.add(R.id.main_container, notificationFragment);
+        fragmentTransaction.add(R.id.main_container, accountFragment);
+
+        fragmentTransaction.hide(notificationFragment);
+        fragmentTransaction.hide(accountFragment);
+
+        fragmentTransaction.commit();
     }
 
 }

@@ -87,15 +87,11 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
         firebaseFirestore.collection("Posts/" + blogPostId + "/Likes").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                if (!documentSnapshots.isEmpty()){
-
+                if (!documentSnapshots.isEmpty()) {
                     int count = documentSnapshots.size();
                     holder.updateLikesCount(count);
-
-                }else{
-
+                } else {
                     holder.updateLikesCount(0);
-
                 }
             }
         });
@@ -190,9 +186,9 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
             blog_date.setText(date);
         }
 
-        public void updateLikesCount(int count){
+        public void updateLikesCount(int count) {
             blog_like_count = mView.findViewById(R.id.blog_like_count);
-            blog_like_count.setText(count +" Likes");
+            blog_like_count.setText(count + " Likes");
         }
 
     }
